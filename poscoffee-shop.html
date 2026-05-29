@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="km" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Coffee Shop Demo - Premium Showcase</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700;900&family=Inter:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            /* Darker modern background */
+            --text-main: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #f6b745;
+            /* Coffee orange/yellow accent */
+            --accent-glow: rgba(246, 183, 69, 0.4);
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --border-color: rgba(48, 54, 61, 0.8);
+            --gradient-1: #e06c3a;
+            --gradient-2: #f6b745;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hanuman', 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Gradient Blobs */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: moveBlobs 25s infinite alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(224, 108, 58, 0.15);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(246, 183, 69, 0.15);
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 40%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 193, 7, 0.1);
+            animation-delay: -10s;
+        }
+
+        @keyframes moveBlobs {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(60px, -60px) scale(1.2);
+            }
+
+            100% {
+                transform: translate(-60px, 60px) scale(0.8);
+            }
+        }
+
+        /* Navbar Custom */
+        nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-family: 'Inter', sans-serif;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 5px var(--accent-glow);
+                transform: translateY(0);
+            }
+
+            50% {
+                text-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent);
+                transform: translateY(-3px);
+            }
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .back-btn:hover {
+            background: var(--accent);
+            color: var(--bg-color);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px var(--accent-glow);
+        }
+
+        .demo-container {
+            max-width: 1100px;
+            margin: 120px auto 50px;
+            padding: 20px;
+        }
+
+        .demo-title {
+            text-align: center;
+            margin-bottom: 70px;
+            font-family: 'Hanuman', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .demo-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            border-radius: 2px;
+        }
+
+        /* Glassmorphism Cards */
+        .feature-card {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            margin-bottom: 60px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUp 0.8s forwards;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(246, 183, 69, 0.15);
+            border-color: rgba(224, 108, 58, 0.3);
+        }
+
+        .feature-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        /* Stagger animations */
+        .feature-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .feature-card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-img-container {
+            flex: 1.4;
+            padding: 30px;
+            position: relative;
+        }
+
+        .img-wrapper {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            pointer-events: none;
+        }
+
+        .feature-img {
+            width: 100%;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+
+        .feature-card:hover .feature-img {
+            transform: scale(1.05);
+        }
+
+        .feature-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .mascot-wrapper {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 25px;
+            background: radial-gradient(circle, rgba(246, 183, 69, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mascot {
+            width: 110px;
+            height: 110px;
+            animation: floatMascot 4s ease-in-out infinite;
+            filter: drop-shadow(0px 15px 10px rgba(0, 0, 0, 0.4));
+        }
+
+        @keyframes floatMascot {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-10px) rotate(-3deg);
+            }
+
+            75% {
+                transform: translateY(-10px) rotate(3deg);
+            }
+        }
+
+        .feature-desc {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Modern Speech Bubble Arrow */
+        .feature-desc::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 24px;
+            height: 24px;
+            background: #161b22;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: -1;
+        }
+
+        /* Decorative dots */
+        .dots {
+            position: absolute;
+            font-size: 3rem;
+            color: var(--gradient-1);
+            opacity: 0.15;
+            top: 20px;
+            right: 30px;
+            letter-spacing: 2px;
+            font-family: monospace;
+        }
+
+        @media (max-width: 900px) {
+
+            .feature-card,
+            .feature-card:nth-child(even) {
+                flex-direction: column;
+            }
+
+            .feature-img-container {
+                padding: 20px;
+                width: 100%;
+            }
+
+            .feature-content {
+                padding: 30px 20px;
+                width: 100%;
+            }
+
+            .demo-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Elements -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <nav>
+        <a href="index.html" class="logo">Panha</a>
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-house"></i> ត្រឡប់ក្រោយ</a>
+    </nav>
+
+    <div class="demo-container">
+        <h1 class="demo-title">ប្រព័ន្ធគ្រប់គ្រងហាងកាហ្វេ (POS System)</h1>
+
+        <!-- Feature 1: Dashboard -->
+        <div class="feature-card">
+            <div class="feature-img-container">
+                <div class="img-wrapper">
+                    <img src="images/Screenshot 2026-05-29 164930.png" alt="POS Dashboard" class="feature-img">
+                </div>
+            </div>
+            <div class="feature-content">
+                <div class="dots">•••<br>•••</div>
+                <div class="mascot-wrapper">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Bandit&backgroundColor=transparent&primaryColor=f6b745"
+                        alt="Mascot" class="mascot">
+                </div>
+                <p class="feature-desc">នេះគឺជា <b>ផ្ទាំងគ្រប់គ្រង (Dashboard)</b> ដែលផ្តល់ព័ត៌មានសង្ខេបពី ការលក់សរុប ការកម្ម៉ង់ អតិថិជន និងផលិតផល យ៉ាងច្បាស់លាស់។</p>
+            </div>
+        </div>
+
+        <!-- Feature 2: Financial Intelligence -->
+        <div class="feature-card">
+            <div class="feature-img-container">
+                <div class="img-wrapper">
+                    <img src="images/Screenshot 2026-05-29 164946.png" alt="Financial Reports" class="feature-img">
+                </div>
+            </div>
+            <div class="feature-content">
+                <div class="dots">•••<br>•••</div>
+                <div class="mascot-wrapper">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Coco&backgroundColor=transparent&primaryColor=e06c3a"
+                        alt="Mascot" class="mascot">
+                </div>
+                <p class="feature-desc">មុខងារ <b>របាយការណ៍ហិរញ្ញវត្ថុ (Financial Intelligence)</b> ជួយឱ្យម្ចាស់ហាងតាមដានចំណូល ទិន្នន័យលក់ និងទំនិញលក់ដាច់បំផុតប្រចាំខែ។</p>
+            </div>
+        </div>
+
+        <!-- Feature 3: POS System View -->
+        <div class="feature-card">
+            <div class="feature-img-container">
+                <div class="img-wrapper">
+                    <img src="images/Screenshot 2026-05-29 165017.png"
+                        alt="Point of Sale Interface" class="feature-img">
+                </div>
+            </div>
+            <div class="feature-content">
+                <div class="dots">•••<br>•••</div>
+                <div class="mascot-wrapper">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Felix&backgroundColor=transparent&primaryColor=f6b745"
+                        alt="Mascot" class="mascot">
+                </div>
+                <p class="feature-desc">នេះគឺជា <b>ប្រព័ន្ធលក់ (Point of Sale)</b> ដ៏ទំនើប ដែលអនុញ្ញាតឱ្យបុគ្គលិករើសផលិតផល និងគិតប្រាក់ឱ្យភ្ញៀវបានយ៉ាងរហ័ស។</p>
+            </div>
+        </div>
+
+        <!-- Feature 4: Products Grid -->
+        <div class="feature-card">
+            <div class="feature-img-container">
+                <div class="img-wrapper">
+                    <img src="images/Screenshot 2026-05-29 165028.png"
+                        alt="Products Management" class="feature-img">
+                </div>
+            </div>
+            <div class="feature-content">
+                <div class="dots">•••<br>•••</div>
+                <div class="mascot-wrapper">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Max&backgroundColor=transparent&primaryColor=e06c3a"
+                        alt="Mascot" class="mascot">
+                </div>
+                <p class="feature-desc">ការគ្រប់គ្រង <b>ផលិតផលក្នុងហាង</b> ត្រូវបានរចនាឡើងយ៉ាងស្រស់ស្អាត ងាយស្រួលស្វែងរក និងមានបង្ហាញចំនួនស្តុកច្បាស់លាស់។</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
