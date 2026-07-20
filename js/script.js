@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 7. Typing Effect
-    const words = ["web.", "mobile.", "future."];
+    const words = ["website.", "mobile.", "Developer with Ai.", "SQl.", "Designer UX UI"];
     let i = 0;
     let timer;
     const typingElement = document.querySelector('.typing');

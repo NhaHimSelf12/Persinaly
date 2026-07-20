@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-            
+
     // 1. Page Loader
     const loader = document.getElementById('loader');
     setTimeout(() => {
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const htmlTag = document.documentElement;
     const icon = themeToggleBtn.querySelector('i');
-    
+
     // Check LocalStorage
     const currentTheme = localStorage.getItem('theme') || 'dark';
     htmlTag.setAttribute('data-theme', currentTheme);
@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggleBtn.addEventListener('click', () => {
         let theme = htmlTag.getAttribute('data-theme');
         let newTheme = theme === 'dark' ? 'light' : 'dark';
-        
+
         htmlTag.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcon(newTheme);
     });
 
     function updateThemeIcon(theme) {
-        if(theme === 'dark') {
+        if (theme === 'dark') {
             icon.classList.remove('fa-moon');
             icon.classList.add('fa-sun');
         } else {
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', () => {
         // Navbar shadow
-        if(window.scrollY > 50) {
+        if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
@@ -63,14 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
-            if(scrollY >= (sectionTop - sectionHeight / 3)) {
+            if (scrollY >= (sectionTop - sectionHeight / 3)) {
                 current = section.getAttribute('id');
             }
         });
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if(link.getAttribute('href').includes(current)) {
+            if (link.getAttribute('href').includes(current)) {
                 link.classList.add('active');
             }
         });
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. Back to Top Button
     const backToTop = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => {
-        if(window.scrollY > 500) {
+        if (window.scrollY > 500) {
             backToTop.classList.add('visible');
         } else {
             backToTop.classList.remove('visible');
@@ -108,14 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 7. Typing Effect
-    const words = ["web.", "mobile.", "future."];
+    const words = ["website.", "mobile.", "Developer with Ai.", "SQl.", "Designer UX UI"];
     let i = 0;
     let timer;
     const typingElement = document.querySelector('.typing');
-    
+
     function typingEffect() {
         let word = words[i].split("");
-        var loopTyping = function() {
+        var loopTyping = function () {
             if (word.length > 0) {
                 typingElement.innerHTML += word.shift();
             } else {
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function deletingEffect() {
         let word = words[i].split("");
-        var loopDeleting = function() {
+        var loopDeleting = function () {
             if (word.length > 0) {
                 word.pop();
                 typingElement.innerHTML = word.join("");
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         loopDeleting();
     }
-    
+
     setTimeout(typingEffect, 1500);
 
     // 8. Intersection Observer (Fade Up Animations & Skill Bars)
@@ -159,15 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                
+
                 // If it's the skills section, animate bars
-                if(entry.target.id === 'skills' || entry.target.closest('#skills')) {
+                if (entry.target.id === 'skills' || entry.target.closest('#skills')) {
                     const bars = entry.target.querySelectorAll('.skill-progress');
                     bars.forEach(bar => {
                         bar.style.width = bar.getAttribute('data-width');
                     });
                 }
-                
+
                 observer.unobserve(entry.target);
             }
         });
